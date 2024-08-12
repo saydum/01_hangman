@@ -31,6 +31,6 @@ php main.php
 ```
 
 ## images
-|   |                                                                       |                                                                        |
-|---|-----------------------------------------------------------------------|------------------------------------------------------------------------|
-![](https://github.com/saydum/01_hangman_php/blob/main/state/sc1.png) | ![](https://github.com/saydum/01_hangman_php/blob/main/state/sc2.png) | ![](/https://github.com/saydum/01_hangman_php/blob/main/state/sc3.png) |
+|   |                                                                   |                                                                   |
+|---|-------------------------------------------------------------------|-------------------------------------------------------------------|
+![](https://github.com/saydum/01_hangman/blob/main/state/sc1.png) | ![](https://github.com/saydum/01_hangman/blob/main/state/sc2.png) | ![](https://github.com/saydum/01_hangman/blob/main/state/sc3.png) |
