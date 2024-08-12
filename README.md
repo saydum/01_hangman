@@ -23,4 +23,14 @@ https://zhukovsd.github.io/java-backend-learning-course/projects/hangman/
 - `checkFinish(string $word, array $stateWord): bool`: Проверяет не угаданная ли слово полностью.
 - `playGame(array $words, int $attemptsCount): void`: Запускает игру, выводить куча сообщений проверяет условии и т. д.
 
+## Запуск
+```bash
+git clone <repo> hangman
+cd hangman/php8.3
+php main.php
+```
+
 ## images
+|   |   |   |
+|---|---|---|
+![](/home/saydumgamzabekovich/Projects/RoadMapSergey/01_hangman/state/sc1.png) | ![](/home/saydumgamzabekovich/Projects/RoadMapSergey/01_hangman/state/sc2.png) | ![](/home/saydumgamzabekovich/Projects/RoadMapSergey/01_hangman/state/sc3.png) |
