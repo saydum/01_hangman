@@ -31,6 +31,6 @@ php main.php
 ```
 
 ## images
-|   |   |   |
-|---|---|---|
-![](/home/saydumgamzabekovich/Projects/RoadMapSergey/01_hangman/state/sc1.png) | ![](/home/saydumgamzabekovich/Projects/RoadMapSergey/01_hangman/state/sc2.png) | ![](/home/saydumgamzabekovich/Projects/RoadMapSergey/01_hangman/state/sc3.png) |
+|   |                                                                       |                                                                        |
+|---|-----------------------------------------------------------------------|------------------------------------------------------------------------|
+![](https://github.com/saydum/01_hangman_php/blob/main/state/sc1.png) | ![](https://github.com/saydum/01_hangman_php/blob/main/state/sc2.png) | ![](/https://github.com/saydum/01_hangman_php/blob/main/state/sc3.png) |
