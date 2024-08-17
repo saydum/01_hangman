@@ -17,10 +17,15 @@ function updateStateWord(string $letter, string $word, array &$stateWord): void
     }
 }
 
+function createFilledArray(int $length, string $value): array
+{
+    return array_fill(0, $length, $value);
+}
+
 function renderUi(int $step): void
 {
     $uiElements = [' ', '0', '/', '|', '\\', '/', '\\'];
-    $ui = array_fill(0, count($uiElements), ' ');
+    $ui = createFilledArray(count($uiElements), ' ');
 
     if ($step <= 6 && $step >= 0) {
         for ($i = 0; $i <= $step; $i++) {
@@ -29,7 +34,7 @@ function renderUi(int $step): void
     }
 
     $hangman = "
-    ----------
+    --------------
            |     |
            {$ui[1]}     |
           {$ui[2]}{$ui[3]}{$ui[4]}    |
@@ -48,42 +53,80 @@ function checkFinish(string $word, array $stateWord): bool
     return false;
 }
 
-function playGame(array $words, int $attemptsCount): void
+function validateReadlineLetter(string $letter): bool
+{
+    return strlen($letter) !== 1;
+}
+
+function displayGameState(array &$stateWord, int $attemptsCount): void
+{
+    echo "Word: " . implode('', $stateWord) . PHP_EOL;
+    echo "Attempts: {$attemptsCount}" . PHP_EOL;
+}
+
+function handleCorrectLetter(string $letter, string $word, array &$stateWord): bool
+{
+    updateStateWord($letter, $word, $stateWord);
+    return checkFinish($word, $stateWord);
+}
+
+function handleIncorrectLetter(int &$attemptsCount, int &$step): void
+{
+    $attemptsCount--;
+    renderUi($step);
+    $step++;
+
+    if ($attemptsCount === 0) echo '🤖 Game Over 🤖';
+}
+
+function welcome(int $attemptsCount): void
 {
     echo "--------------------------------------------------------" . PHP_EOL;
     echo "---------------   Hangman v0.0.1    --------------------" . PHP_EOL;
     echo "-------  You have {$attemptsCount} attempts to guess the word  -------" . PHP_EOL;
     echo "--------------------------------------------------------" . PHP_EOL;
-
-    $word = setRandomWord($words);
-    $stateWord = array_fill(0, strlen($word), ' _ ');
-
-    renderUi(0);
-    $step = 1;
-
-
-    while (true) {
-        echo "Word: " . implode('', $stateWord) . PHP_EOL;
-        echo "Attempts: {$attemptsCount}" . PHP_EOL;
-
-        $letter = readline("Enter letter...");
-        if (strlen($letter) > 1) break;
-
-        if (checkLetterInWord($letter, $word)) {
-            updateStateWord($letter, $word, $stateWord);
-
-            if (checkFinish($word, $stateWord)) break;
-        } else {
-            $attemptsCount--;
-            renderUi($step);
-            $step++;
-            if ($attemptsCount === 0) {
-                echo '🤖 Game Over 🤖';
-                break;
-            }
-        }
-    }
-
 }
 
-playGame(['moscow', 'apple'], 10);
+function gameLoop(array &$stateWord, int $attemptsCount, string $word, int $step): void
+{
+    while (true) {
+        displayGameState($stateWord, $attemptsCount);
+        $letter = readline("Enter letter...");
+
+        if (!validateReadlineLetter($letter)) {
+            if (checkLetterInWord($letter, $word)) {
+                if (handleCorrectLetter($letter, $word, $stateWord)) break;
+            } else {
+                handleIncorrectLetter($attemptsCount, $step);
+                if ($attemptsCount === 0) break;
+            }
+        } else {
+            echo "Please enter a single letter." . PHP_EOL;
+        }
+    }
+}
+
+function playGame(array $words): void
+{
+    // Устанавливаем рандомно новое слово
+    $word = setRandomWord($words);
+
+    // Устанавливаем попытки по длине слово
+    $attemptsCount = strlen($word) + 3;
+    
+    // Вывод приветствия
+    welcome($attemptsCount);
+
+    // Инициализируем слово в виде массива чтобы в себе хранить состояние угадываемого слова
+    $stateWord = createFilledArray(strlen($word), ' _ ');
+
+    // Инициализируем вывод виселицы
+    renderUi(0);
+    // По шагам вырисовывается виселицу
+    $step = 1;
+
+    // Запускаем игровой цикл
+    gameLoop($stateWord, $attemptsCount, $word, $step);
+}
+
+playGame(['moscow', 'apple']);
